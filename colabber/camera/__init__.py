@@ -1,0 +1,1 @@
+from .photo_capture import take_photo
