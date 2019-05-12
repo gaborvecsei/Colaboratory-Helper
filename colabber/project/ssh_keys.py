@@ -1,7 +1,7 @@
-from pathlib import Path
-from google.colab import files
 import subprocess
-import os
+from pathlib import Path
+
+from google.colab import files
 
 
 def setup_my_ssh_key(key_string: str = None, regex_for_file_name: str = "*id_rsa"):
@@ -10,7 +10,7 @@ def setup_my_ssh_key(key_string: str = None, regex_for_file_name: str = "*id_rsa
         _ = files.upload()
     else:
         # Write the provided contents of the key file to a file
-        with open("custom_id_rsa", "w") as f:
+        with open("my_id_rsa", "w") as f:
             f.write(key_string)
 
     # Find the uploaded ssh key file
@@ -30,3 +30,7 @@ def setup_my_ssh_key(key_string: str = None, regex_for_file_name: str = "*id_rsa
     subprocess.check_call(["chmod", "600", str(new_ssh_key_path)])
     keyscan_out = subprocess.check_output(["ssh-keyscan", "github.com"])
     known_hosts_file_path.write_bytes(keyscan_out)
+
+    # Clean up
+    ssh_key_file_path.unlink()
+    print("[*] SSH key set up successfully!")
