@@ -4,7 +4,7 @@ This repo holds functions, which contains boilerplate "helper" *Google Colab* co
 
 Most of the scrips and functions will be only usable and relevant with *Colab Notebooks*.
 
-<img src="art/colab_ssh.png", width=500>
+<img src="art/colab_ssh.png" width=500>
 
 ## Install
 
