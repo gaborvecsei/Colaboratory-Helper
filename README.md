@@ -4,6 +4,8 @@ This repo holds functions, which contains boilerplate "helper" *Google Colab* co
 
 Most of the scrips and functions will be only usable and relevant with *Colab Notebooks*.
 
+<img src="art/colab_ssh.png", width=500>
+
 ## Install
 
 `pip install git+https://github.com/gaborvecsei/Colaboratory-Helper.git`
@@ -17,7 +19,3 @@ Then you can just easily import the module: `import colabber`
 This comes handy when you are working with private repos from GitHub (or other vc sites)
 - `colabber.setup_ssh_port_forwarding()`: This allows you to SSH into the started Colab Server
 - `colabber.terminate_ssh_port_forwarding()`: Terminates the port forwarding
-
-## About
-
-Me :sunglasses:
