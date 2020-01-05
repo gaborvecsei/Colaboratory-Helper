@@ -1,5 +1,6 @@
 """
-Code/idea is adapted from https://imadelhanafi.com/posts/google_colal_server/
+Code/idea is adapted from
+https://imadelhanafi.com/posts/google_colal_server/
 """
 
 import getpass
@@ -14,15 +15,17 @@ def _generate_random_str(length: int):
     return rnd_str
 
 
-def _run_cmd(cmd: str, verbose: bool = True):
+def _run_cmd(cmd: str, in_bg:bool=False):
     # args = shlex.split(cmd)
     # TODO: do not use shell=True
-    subprocess.check_call(cmd, shell=True)
+    p = subprocess.Popen(cmd, shell=True)
+    if not in_bg:
+        p.wait()
 
 
 def _setup_sshd():
-    cmd = "apt-get install -qq -o=Dpkg::Use-Pty=0 openssh-server pwgen > /dev/null"
-    _run_cmd(cmd)
+    _run_cmd("apt-get install openssh-server > /dev/null")
+    _run_cmd("apt-get install pwgen > /dev/null")
 
 
 def _set_root_pwd_random() -> tuple:
@@ -36,7 +39,7 @@ def _set_root_pwd_random() -> tuple:
 
 
 def _run_sshd():
-    _run_cmd('/usr/sbin/sshd -D &')
+    _run_cmd('/usr/sbin/sshd -D', in_bg=True)
 
 
 def _download_ngrok():
@@ -46,7 +49,8 @@ def _download_ngrok():
 
 def _setup_ngrok():
     authtoken = getpass.getpass()
-    _run_cmd('./ngrok authtoken {0} && ./ngrok tcp 22 &'.format(authtoken))
+    _run_cmd('./ngrok authtoken {0}'.format(authtoken))
+    _run_cmd("./ngrok tcp 22", in_bg=True)
 
 
 def setup_ssh_port_forwarding():
@@ -54,7 +58,7 @@ def setup_ssh_port_forwarding():
     username, password = _set_root_pwd_random()
     print("[*] Username: {0}".format(username))
     print("[*] Password (Use this for your SSH connection): {0}".format(password))
-    # _run_sshd()
+    _run_sshd()
     _download_ngrok()
     print("Get your authtoken from https://dashboard.ngrok.com/auth")
     print("Please enter you authtoken below:")
