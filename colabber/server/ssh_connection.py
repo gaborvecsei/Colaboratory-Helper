@@ -1,5 +1,5 @@
 """
-Code is from https://imadelhanafi.com/posts/google_colal_server/
+Code/idea is adapted from https://imadelhanafi.com/posts/google_colal_server/
 """
 
 import getpass
